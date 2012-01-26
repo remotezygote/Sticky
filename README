@@ -1,0 +1,5 @@
+Allows you to make an element "stick" to the screen as you scroll down past it. You simple create a new Sticky(element) on it, and you're off. There is an optional second argument for setting the "padding" on top of the element that should be used as a buffer zone. It will break free from the page and follow the viewport at that many pixels from the top of the element (default is 10).
+
+Example: new Sticky(element,15);
+
+It uses a single listener for page scrolling, and only transitions between the element's current style and a position:fixed; style when the viewport scrolls up or down to the transition point, so it should work and maintain performance even with many elements to watch.
