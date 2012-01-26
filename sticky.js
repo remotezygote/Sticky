@@ -23,19 +23,20 @@ var Sticky = function(element,pad,style,pos,obj,a,s,repos) {
 	style = element["get"+(a="Attribute")]((s="style"));
 	pos = [0,0];
 	stuck = 0;
-	element.s = function(ev) {
-		if(!stuck) {
+	element.s = function(force) {
+		if(force || !stuck) {
 			element["set"+a](s,style+";position:fixed;top:"+pad+"px;left:"+pos[0]+"px;margin:0;");
 			stuck = 1;
 		};
 	};
-	element.u = function() {
-		if(stuck) {
+	element.u = function(force) {
+		if(force || stuck) {
 			element["set"+a](s,style);
 			stuck = 0;
 		};
 	};
 	repos = function() {
+		element["set"+a](s,style);
 		pos = [0,0];
 		obj = element;
 		if(obj.offsetParent) {
@@ -44,7 +45,7 @@ var Sticky = function(element,pad,style,pos,obj,a,s,repos) {
 				pos[1] += obj.offsetTop;
 			} while((obj=obj.offsetParent));
 		};
-		stuck?element.s():element.u();
+		stuck?element.s(1):element.u(1);
 	};
 	repos();
 	window.addEventListener("resize",repos,1);
